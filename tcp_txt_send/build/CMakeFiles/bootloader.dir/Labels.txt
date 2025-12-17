@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+C:/Users/Pizza/Desktop/test_gra/build/CMakeFiles/bootloader
+C:/Users/Pizza/Desktop/test_gra/build/CMakeFiles/bootloader.rule
+C:/Users/Pizza/Desktop/test_gra/build/CMakeFiles/bootloader-complete.rule
+C:/Users/Pizza/Desktop/test_gra/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+C:/Users/Pizza/Desktop/test_gra/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+C:/Users/Pizza/Desktop/test_gra/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+C:/Users/Pizza/Desktop/test_gra/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+C:/Users/Pizza/Desktop/test_gra/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+C:/Users/Pizza/Desktop/test_gra/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+C:/Users/Pizza/Desktop/test_gra/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
