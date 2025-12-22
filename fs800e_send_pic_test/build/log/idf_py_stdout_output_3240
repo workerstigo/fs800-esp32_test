@@ -1,0 +1,429 @@
+Command: C:\Espressif\python_env\idf6.0_py3.11_env\Scripts\python.exe C:\Espressif\frameworks\esp-idf-v6.0\tools/idf_monitor.py -p COM5 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 C:\Users\Pizza\Desktop\fs800+esp32_test\fs800-esp32_test\fs800-esp32_test\fs800e_send_pic_test\build\merged_esp32cam_4g.elf C:\Users\Pizza\Desktop\fs800+esp32_test\fs800-esp32_test\fs800-esp32_test\fs800e_send_pic_test\build\bootloader\bootloader.elf --force-color -m 'C:\Espressif\python_env\idf6.0_py3.11_env\Scripts\python.exe' 'C:\Espressif\frameworks\esp-idf-v6.0\tools\idf.py'
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x12 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6376
+load:0x40078000,len:15900
+ho 0 tail 12 room 4
+load:0x40080400,len:3920
+entry 0x40080644
+[0;32mI (29) boot: ESP-IDF v6.0-beta1-293-ge8ba1ed59a 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Dec 22 2025 15:08:35[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.0[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00005000[0m
+[0;32mI (66) boot:  1 otadata          OTA data         01 00 0000e000 00002000[0m
+[0;32mI (72) boot:  2 app0             OTA app          00 10 00010000 003c0000[0m
+[0;32mI (79) boot:  3 fr               Unknown data     01 06 003d0000 00020000[0m
+[0;32mI (85) boot:  4 coredump         Unknown data     01 03 003f0000 00010000[0m
+[0;32mI (92) boot: End of partition table[0m
+[0;32mI (95) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=2cfe4h (184292) map[0m
+[0;32mI (168) esp_image: segment 1: paddr=0003d00c vaddr=3ffb0000 size=0300ch ( 12300) load[0m
+[0;32mI (173) esp_image: segment 2: paddr=00040020 vaddr=400d0020 size=ac358h (705368) map[0m
+[0;32mI (425) esp_image: segment 3: paddr=000ec380 vaddr=3ffb300c size=03778h ( 14200) load[0m
+[0;32mI (431) esp_image: segment 4: paddr=000efb00 vaddr=40080000 size=1ac44h (109636) load[0m
+[0;32mI (475) esp_image: segment 5: paddr=0010a74c vaddr=50000000 size=00024h (    36) load[0m
+[0;32mI (489) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (490) boot: Disabling RNG early entropy source...[0m
+[0;32mI (500) quad_psram: This chip is ESP32-D0WD[0m
+[0;32mI (502) esp_psram: Found 8MB PSRAM device[0m
+[0;32mI (502) esp_psram: Speed: 40MHz[0m
+[0;32mI (502) esp_psram: PSRAM initialized, cache is in low/high (2-core) mode.[0m
+[0;33mW (507) esp_psram: Virtual address not enough for PSRAM, map as much as we can. 4MB is mapped[0m
+[0;32mI (515) cpu_start: Multicore app[0m
+[0;32mI (1424) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (1431) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (1432) cpu_start: Pro cpu start user code[0m
+[0;32mI (1432) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (1434) app_init: Application information:[0m
+[0;32mI (1438) app_init: Project name:     merged_esp32cam_4g[0m
+[0;32mI (1443) app_init: App version:      99b11cd[0m
+[0;32mI (1447) app_init: Compile time:     Dec 22 2025 15:08:24[0m
+[0;32mI (1452) app_init: ELF file SHA256:  47b78d6e5...[0m
+[0;32mI (1456) app_init: ESP-IDF:          v6.0-beta1-293-ge8ba1ed59a[0m
+[0;32mI (1462) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (1466) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (1470) efuse_init: Chip rev:         v3.0[0m
+[0;32mI (1474) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (1480) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (1485) heap_init: At 3FFBE3E8 len 00021C18 (135 KiB): DRAM[0m
+[0;32mI (1491) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (1496) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (1502) heap_init: At 4009AC44 len 000053BC (20 KiB): IRAM[0m
+[0;32mI (1508) esp_psram: Adding pool of 4096K of PSRAM memory to heap allocator[0m
+[0;32mI (1515) spi_flash: detected chip: generic[0m
+[0;32mI (1518) spi_flash: flash io: dio[0m
+[0;32mI (1522) main_task: Started on CPU0[0m
+[0;32mI (1523) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (1532) main_task: Calling app_main()[0m
+[0;32mI (1578) wifi:wifi driver task: 3ffc64b4, prio:23, stack:6656, core=0[0m
+[0;32mI (1594) wifi:wifi firmware version: dfff79f[0m
+[0;32mI (1594) wifi:wifi certification version: v7.0[0m
+[0;32mI (1594) wifi:config NVS flash: enabled[0m
+[0;32mI (1595) wifi:config nano formatting: disabled[0m
+[0;32mI (1599) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (1604) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (1608) wifi:Init management short buffer num: 32[0m
+[0;32mI (1613) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (1617) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (1621) wifi:Init static rx buffer num: 10[0m
+[0;32mI (1625) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (1630) wifi_init: rx ba win: 6[0m
+[0;32mI (1632) wifi_init: accept mbox: 6[0m
+[0;32mI (1635) wifi_init: tcpip mbox: 32[0m
+[0;32mI (1638) wifi_init: udp mbox: 6[0m
+[0;32mI (1641) wifi_init: tcp mbox: 6[0m
+[0;32mI (1644) wifi_init: tcp tx win: 5760[0m
+[0;32mI (1647) wifi_init: tcp rx win: 5760[0m
+[0;32mI (1650) wifi_init: tcp mss: 1440[0m
+[0;32mI (1653) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1657) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (1662) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (1670) phy_init: phy_version 4861,b71b5ad,Aug  5 2025,11:16:06[0m
+[0;32mI (1748) wifi:mode : sta (24:d7:eb:19:d3:34)[0m
+[0;32mI (1749) wifi:enable tsf[0m
+[0;32mI (1755) cam_hal: cam init ok[0m
+[0;32mI (1757) sccb-ng: pin_sda 26 pin_scl 27[0m
+[0;32mI (1757) sccb-ng: sccb_i2c_port=1[0m
+[0;32mI (1790) ov3660: Mismatch PID=0x5640[0m
+[0;32mI (1792) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00[0m
+[0;32mI (1793) camera: Detected OV5640 camera[0m
+[0;32mI (1793) camera: Detected camera at address=0x3c[0m
+[0;32mI (2490) cam_hal: PSRAM DMA mode disabled[0m
+[0;32mI (2490) cam_hal: buffer_size: 32768, half_buffer_size: 4096, node_buffer_size: 2048, node_cnt: 16, total_cnt: 3[0m
+[0;32mI (2492) cam_hal: Allocating 15360 Byte frame buffer in PSRAM[0m
+[0;32mI (2498) cam_hal: Allocating 15360 Byte frame buffer in PSRAM[0m
+[0;32mI (2504) cam_hal: cam config ok[0m
+[0;32mI (2520) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4[0m
+[0;32mI (2521) ov5640: Calculated XVCLK: 5000000 Hz, REFIN: 2500000 Hz, VCO: 450000000 Hz, PLL_CLK: 45000000 Hz, SYSCLK: 11250000 Hz, PCLK: 2812500 Hz[0m
+[0;32mI (2559) camera_httpd: Starting web server on port: '80'[0m
+[0;32mI (2565) camera_httpd: Starting stream server on port: '81'[0m
+[0;32mI (2569) main_task: Returned from app_main()[0m
+[0;32mI (2569) image_to_4g: Initializing 4G Module (Wait for Connection)...[0m
+[0;32mI (2571) image_to_4g: CMD: AT[0m
+[0;32mI (3775) image_to_4g: CMD: +++[0m
+[0;32mI (4976) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (4976) image_to_4g: CMD: AT[0m
+[0;32mI (6176) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (6176) image_to_4g: CMD: AT+E=OFF[0m
+[0;32mI (7376) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (7376) image_to_4g: CMD: AT+APN=internet,,,0[0m
+[0;32mI (8576) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (8576) image_to_4g: CMD: AT+SOCKEN=ON[0m
+[0;32mI (9776) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (9776) image_to_4g: CMD: AT+SOCK=TCP,1.172.241.43,5000[0m
+[0;32mI (10976) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (10976) image_to_4g: CMD: AT+SOCKSL=LONG[0m
+[0;32mI (12176) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (12176) image_to_4g: CMD: AT+S[0m
+[0;32mI (13376) image_to_4g: Resp: [0m
+OK
+^boot.rom'v
+[0;32mI (13376) image_to_4g: Waiting for TCP Connection Verification...[0m
+[0;32mI (13666) image_to_4g: 4G Status: freestrong[0m
+[0;32mI (15166) image_to_4g: 4G Status: FS@TCP CONNECTED:0[0m
+
+[0;32mI (15166) image_to_4g: 4G Connection Verified (Ready for Data)[0m
+[0;32mI (15666) image_to_4g: Heartbeat. Status: CONNECTED. Use a strong 5V power supply![0m
+[0;32mI (15666) image_to_4g: Capturing Image...[0m
+[0;32mI (15672) image_to_4g: Sending Image (5556 bytes)...[0m
+[0;32mI (15733) image_to_4g: TX: 4096/5556 (TURBO)[0m
+[0;32mI (15743) image_to_4g: TX: 5556/5556 (TURBO)[0m
+[0;32mI (15753) image_to_4g: Transmission Finished.[0m
+[0;32mI (16803) image_to_4g: Capturing Image...[0m
+[0;32mI (16809) image_to_4g: Sending Image (5576 bytes)...[0m
+[0;32mI (16870) image_to_4g: TX: 4096/5576 (TURBO)[0m
+[0;32mI (16880) image_to_4g: TX: 5576/5576 (TURBO)[0m
+[0;32mI (16890) image_to_4g: Transmission Finished.[0m
+[0;32mI (17940) image_to_4g: Capturing Image...[0m
+[0;32mI (17945) image_to_4g: Sending Image (5416 bytes)...[0m
+[0;32mI (18006) image_to_4g: TX: 4096/5416 (TURBO)[0m
+[0;32mI (18016) image_to_4g: TX: 5416/5416 (TURBO)[0m
+[0;32mI (18026) image_to_4g: Transmission Finished.[0m
+[0;32mI (19076) image_to_4g: Capturing Image...[0m
+[0;32mI (19081) image_to_4g: Sending Image (5436 bytes)...[0m
+[0;32mI (19142) image_to_4g: TX: 4096/5436 (TURBO)[0m
+[0;32mI (19153) image_to_4g: TX: 5436/5436 (TURBO)[0m
+[0;32mI (19163) image_to_4g: Transmission Finished.[0m
+[0;32mI (20213) image_to_4g: Capturing Image...[0m
+[0;32mI (20218) image_to_4g: Sending Image (5408 bytes)...[0m
+[0;32mI (20279) image_to_4g: TX: 4096/5408 (TURBO)[0m
+[0;32mI (20289) image_to_4g: TX: 5408/5408 (TURBO)[0m
+[0;32mI (20299) image_to_4g: Transmission Finished.[0m
+[0;32mI (20749) image_to_4g: Heartbeat. Status: CONNECTED. Use a strong 5V power supply![0m
+[0;32mI (21349) image_to_4g: Capturing Image...[0m
+[0;32mI (21355) image_to_4g: Sending Image (5448 bytes)...[0m
+[0;32mI (21416) image_to_4g: TX: 4096/5448 (TURBO)[0m
+[0;32mI (21426) image_to_4g: TX: 5448/5448 (TURBO)[0m
+[0;32mI (21436) image_to_4g: Transmission Finished.[0m
+[0;32mI (22486) image_to_4g: Capturing Image...[0m
+[0;32mI (22491) image_to_4g: Sending Image (5432 bytes)...[0m
+[0;32mI (22552) image_to_4g: TX: 4096/5432 (TURBO)[0m
+[0;32mI (22562) image_to_4g: TX: 5432/5432 (TURBO)[0m
+[0;32mI (22572) image_to_4g: Transmission Finished.[0m
+[0;32mI (23622) image_to_4g: Capturing Image...[0m
+[0;32mI (23627) image_to_4g: Sending Image (5428 bytes)...[0m
+[0;32mI (23688) image_to_4g: TX: 4096/5428 (TURBO)[0m
+[0;32mI (23699) image_to_4g: TX: 5428/5428 (TURBO)[0m
+[0;32mI (23709) image_to_4g: Transmission Finished.[0m
+[0;32mI (24759) image_to_4g: Capturing Image...[0m
+[0;32mI (24765) image_to_4g: Sending Image (5444 bytes)...[0m
+[0;32mI (24825) image_to_4g: TX: 4096/5444 (TURBO)[0m
+[0;32mI (24835) image_to_4g: TX: 5444/5444 (TURBO)[0m
+[0;32mI (24845) image_to_4g: Transmission Finished.[0m
+[0;32mI (25895) image_to_4g: Heartbeat. Status: CONNECTED. Use a strong 5V power supply![0m
+[0;32mI (25895) image_to_4g: Capturing Image...[0m
+[0;32mI (25901) image_to_4g: Sending Image (5416 bytes)...[0m
+[0;32mI (25961) image_to_4g: TX: 4096/5416 (TURBO)[0m
+[0;32mI (25971) image_to_4g: TX: 5416/5416 (TURBO)[0m
+[0;32mI (25981) image_to_4g: Transmission Finished.[0m
+[0;32mI (27031) image_to_4g: Capturing Image...[0m
+[0;32mI (27036) image_to_4g: Sending Image (5428 bytes)...[0m
+[0;32mI (27097) image_to_4g: TX: 4096/5428 (TURBO)[0m
+[0;32mI (27107) image_to_4g: TX: 5428/5428 (TURBO)[0m
+[0;32mI (27117) image_to_4g: Transmission Finished.[0m
+[0;32mI (28167) image_to_4g: Capturing Image...[0m
+[0;32mI (28172) image_to_4g: Sending Image (5384 bytes)...[0m
+[0;32mI (28233) image_to_4g: TX: 4096/5384 (TURBO)[0m
+[0;32mI (28244) image_to_4g: TX: 5384/5384 (TURBO)[0m
+[0;32mI (28254) image_to_4g: Transmission Finished.[0m
+[0;32mI (28771) image_to_4g: 4G RX: FS@TCP DISCONNECT:0,3[0m
+
+[0;32mI (29171) image_to_4g: Capturing Image...[0m
+[0;32mI (29176) image_to_4g: Sending Image (5360 bytes)...[0m
+[0;32mI (29237) image_to_4g: TX: 4096/5360 (TURBO)[0m
+[0;32mI (29247) image_to_4g: TX: 5360/5360 (TURBO)[0m
+[0;32mI (29257) image_to_4g: Transmission Finished.[0m
+[0;32mI (30307) image_to_4g: Capturing Image...[0m
+[0;32mI (30312) image_to_4g: Sending Image (5360 bytes)...[0m
+[0;32mI (30373) image_to_4g: TX: 4096/5360 (TURBO)[0m
+[0;32mI (30383) image_to_4g: TX: 5360/5360 (TURBO)[0m
+[0;32mI (30393) image_to_4g: Transmission Finished.[0m
+[0;32mI (30993) image_to_4g: Heartbeat. Status: CONNECTED. Use a strong 5V power supply![0m
+[0;32mI (31443) image_to_4g: Capturing Image...[0m
+[0;32mI (31448) image_to_4g: Sending Image (5192 bytes)...[0m
+[0;32mI (31509) image_to_4g: TX: 4096/5192 (TURBO)[0m
+[0;32mI (31519) image_to_4g: TX: 5192/5192 (TURBO)[0m
+[0;32mI (31529) image_to_4g: Transmission Finished.[0m
+[0;32mI (32579) image_to_4g: Capturing Image...[0m
+[0;32mI (32584) image_to_4g: Sending Image (5420 bytes)...[0m
+[0;32mI (32645) image_to_4g: TX: 4096/5420 (TURBO)[0m
+[0;32mI (32656) image_to_4g: TX: 5420/5420 (TURBO)[0m
+[0;32mI (32666) image_to_4g: Transmission Finished.[0m
+[0;32mI (33716) image_to_4g: Capturing Image...[0m
+[0;32mI (33721) image_to_4g: Sending Image (5296 bytes)...[0m
+[0;32mI (33782) image_to_4g: TX: 4096/5296 (TURBO)[0m
+[0;32mI (33792) image_to_4g: TX: 5296/5296 (TURBO)[0m
+[0;32mI (33802) image_to_4g: Transmission Finished.[0m
+[0;32mI (34852) image_to_4g: Capturing Image...[0m
+[0;32mI (34857) image_to_4g: Sending Image (5024 bytes)...[0m
+[0;32mI (34918) image_to_4g: TX: 4096/5024 (TURBO)[0m
+[0;32mI (34928) image_to_4g: TX: 5024/5024 (TURBO)[0m
+[0;32mI (34938) image_to_4g: Transmission Finished.[0m
+[0;32mI (35988) image_to_4g: Capturing Image...[0m
+[0;32mI (35994) image_to_4g: Sending Image (5452 bytes)...[0m
+[0;32mI (36054) image_to_4g: TX: 4096/5452 (TURBO)[0m
+[0;32mI (36064) image_to_4g: TX: 5452/5452 (TURBO)[0m
+[0;32mI (36074) image_to_4g: Transmission Finished.[0m
+[0;32mI (36224) image_to_4g: Heartbeat. Status: CONNECTED. Use a strong 5V power supply![0m
+[0;32mI (37124) image_to_4g: Capturing Image...[0m
+[0;32mI (37130) image_to_4g: Sending Image (5452 bytes)...[0m
+[0;32mI (37191) image_to_4g: TX: 4096/5452 (TURBO)[0m
+[0;32mI (37202) image_to_4g: TX: 5452/5452 (TURBO)[0m
+[0;32mI (37212) image_to_4g: Transmission Finished.[0m
+[0;32mI (38262) image_to_4g: Capturing Image...[0m
+[0;32mI (38268) image_to_4g: Sending Image (5460 bytes)...[0m
+[0;32mI (38328) image_to_4g: TX: 4096/5460 (TURBO)[0m
+[0;32mI (38338) image_to_4g: TX: 5460/5460 (TURBO)[0m
+[0;32mI (38348) image_to_4g: Transmission Finished.[0m
+[0;32mI (38998) image_to_4g: 4G RX: FS@TCP CONNECTED:0[0m
+FS@TCP DISCONNECT:0,3
+
+[0;32mI (39398) image_to_4g: Capturing Image...[0m
+[0;32mI (39404) image_to_4g: Sending Image (5444 bytes)...[0m
+[0;32mI (39464) image_to_4g: TX: 4096/5444 (TURBO)[0m
+[0;32mI (39474) image_to_4g: TX: 5444/5444 (TURBO)[0m
+[0;32mI (39484) image_to_4g: Transmission Finished.[0m
+[0;32mI (40534) image_to_4g: Capturing Image...[0m
+[0;32mI (40539) image_to_4g: Sending Image (5040 bytes)...[0m
+[0;32mI (40600) image_to_4g: TX: 4096/5040 (TURBO)[0m
+[0;32mI (40610) image_to_4g: TX: 5040/5040 (TURBO)[0m
+[0;32mI (40620) image_to_4g: Transmission Finished.[0m
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x12 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6376
+load:0x40078000,len:15900
+ho 0 tail 12 room 4
+load:0x40080400,len:3920
+entry 0x40080644
+[0;32mI (29) boot: ESP-IDF v6.0-beta1-293-ge8ba1ed59a 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Dec 22 2025 15:08:35[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.0[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00005000[0m
+[0;32mI (66) boot:  1 otadata          OTA data         01 00 0000e000 00002000[0m
+[0;32mI (72) boot:  2 app0             OTA app          00 10 00010000 003c0000[0m
+[0;32mI (79) boot:  3 fr               Unknown data     01 06 003d0000 00020000[0m
+[0;32mI (85) boot:  4 coredump         Unknown data     01 03 003f0000 00010000[0m
+[0;32mI (92) boot: End of partition table[0m
+[0;32mI (95) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=2cfe4h (184292) map[0m
+[0;32mI (168) esp_image: segment 1: paddr=0003d00c vaddr=3ffb0000 size=0300ch ( 12300) load[0m
+[0;32mI (173) esp_image: segment 2: paddr=00040020 vaddr=400d0020 size=ac358h (705368) map[0m
+[0;32mI (425) esp_image: segment 3: paddr=000ec380 vaddr=3ffb300c size=03778h ( 14200) load[0m
+[0;32mI (431) esp_image: segment 4: paddr=000efb00 vaddr=40080000 size=1ac44h (109636) load[0m
+[0;32mI (475) esp_image: segment 5: paddr=0010a74c vaddr=50000000 size=00024h (    36) load[0m
+[0;32mI (489) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (490) boot: Disabling RNG early entropy source...[0m
+[0;32mI (500) quad_psram: This chip is ESP32-D0WD[0m
+[0;32mI (502) esp_psram: Found 8MB PSRAM device[0m
+[0;32mI (502) esp_psram: Speed: 40MHz[0m
+[0;32mI (502) esp_psram: PSRAM initialized, cache is in low/high (2-core) mode.[0m
+[0;33mW (507) esp_psram: Virtual address not enough for PSRAM, map as much as we can. 4MB is mapped[0m
+[0;32mI (515) cpu_start: Multicore app[0m
+[0;32mI (1424) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (1431) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (1432) cpu_start: Pro cpu start user code[0m
+[0;32mI (1432) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (1434) app_init: Application information:[0m
+[0;32mI (1438) app_init: Project name:     merged_esp32cam_4g[0m
+[0;32mI (1443) app_init: App version:      99b11cd[0m
+[0;32mI (1447) app_init: Compile time:     Dec 22 2025 15:08:24[0m
+[0;32mI (1452) app_init: ELF file SHA256:  47b78d6e5...[0m
+[0;32mI (1456) app_init: ESP-IDF:          v6.0-beta1-293-ge8ba1ed59a[0m
+[0;32mI (1462) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (1466) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (1470) efuse_init: Chip rev:         v3.0[0m
+[0;32mI (1474) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (1480) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (1485) heap_init: At 3FFBE3E8 len 00021C18 (135 KiB): DRAM[0m
+[0;32mI (1491) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (1496) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (1502) heap_init: At 4009AC44 len 000053BC (20 KiB): IRAM[0m
+[0;32mI (1508) esp_psram: Adding pool of 4096K of PSRAM memory to heap allocator[0m
+[0;32mI (1515) spi_flash: detected chip: generic[0m
+[0;32mI (1518) spi_flash: flash io: dio[0m
+[0;32mI (1522) main_task: Started on CPU0[0m
+[0;32mI (1523) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (1532) main_task: Calling app_main()[0m
+[0;32mI (1578) wifi:wifi driver task: 3ffc64b4, prio:23, stack:6656, core=0[0m
+[0;32mI (1594) wifi:wifi firmware version: dfff79f[0m
+[0;32mI (1594) wifi:wifi certification version: v7.0[0m
+[0;32mI (1594) wifi:config NVS flash: enabled[0m
+[0;32mI (1595) wifi:config nano formatting: disabled[0m
+[0;32mI (1599) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (1604) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (1608) wifi:Init management short buffer num: 32[0m
+[0;32mI (1613) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (1617) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (1621) wifi:Init static rx buffer num: 10[0m
+[0;32mI (1625) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (1630) wifi_init: rx ba win: 6[0m
+[0;32mI (1632) wifi_init: accept mbox: 6[0m
+[0;32mI (1635) wifi_init: tcpip mbox: 32[0m
+[0;32mI (1638) wifi_init: udp mbox: 6[0m
+[0;32mI (1641) wifi_init: tcp mbox: 6[0m
+[0;32mI (1644) wifi_init: tcp tx win: 5760[0m
+[0;32mI (1647) wifi_init: tcp rx win: 5760[0m
+[0;32mI (1650) wifi_init: tcp mss: 1440[0m
+[0;32mI (1653) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1657) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;33mW (1662) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2[0m
+[0;32mI (1670) phy_init: phy_version 4861,b71b5ad,Aug  5 2025,11:16:06[0m
+[0;32mI (1746) phy_init: Saving new calibration data due to checksum failure or outdated calibration data, mode(0)[0m
+[0;32mI (1806) wifi:mode : sta (24:d7:eb:19:d3:34)[0m
+[0;32mI (1807) wifi:enable tsf[0m
+[0;32mI (1813) cam_hal: cam init ok[0m
+[0;32mI (1814) sccb-ng: pin_sda 26 pin_scl 27[0m
+[0;32mI (1815) sccb-ng: sccb_i2c_port=1[0m
+[0;32mI (1848) ov3660: Mismatch PID=0x5640[0m
+[0;32mI (1850) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00[0m
+[0;32mI (1851) camera: Detected OV5640 camera[0m
+[0;32mI (1851) camera: Detected camera at address=0x3c[0m
+[0;32mI (2548) cam_hal: PSRAM DMA mode disabled[0m
+[0;32mI (2548) cam_hal: buffer_size: 32768, half_buffer_size: 4096, node_buffer_size: 2048, node_cnt: 16, total_cnt: 3[0m
+[0;32mI (2550) cam_hal: Allocating 15360 Byte frame buffer in PSRAM[0m
+[0;32mI (2556) cam_hal: Allocating 15360 Byte frame buffer in PSRAM[0m
+[0;32mI (2562) cam_hal: cam config ok[0m
+[0;32mI (2579) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4[0m
+[0;32mI (2581) ov5640: Calculated XVCLK: 5000000 Hz, REFIN: 2500000 Hz, VCO: 450000000 Hz, PLL_CLK: 45000000 Hz, SYSCLK: 11250000 Hz, PCLK: 2812500 Hz[0m
+[0;32mI (2619) camera_httpd: Starting web server on port: '80'[0m
+[0;32mI (2624) camera_httpd: Starting stream server on port: '81'[0m
+[0;32mI (2629) main_task: Returned from app_main()[0m
+[0;32mI (2629) image_to_4g: Initializing 4G Module (Wait for Connection)...[0m
+[0;32mI (2631) image_to_4g: CMD: AT[0m
+[0;32mI (3834) image_to_4g: CMD: +++[0m
+[0;32mI (5034) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (5034) image_to_4g: CMD: AT[0m
+[0;32mI (6234) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (6234) image_to_4g: CMD: AT+E=OFF[0m
+[0;32mI (7434) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (7434) image_to_4g: CMD: AT+APN=internet,,,0[0m
+[0;32mI (8634) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (8634) image_to_4g: CMD: AT+SOCKEN=ON[0m
+[0;32mI (9834) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (9834) image_to_4g: CMD: AT+SOCK=TCP,1.172.241.43,5000[0m
+[0;32mI (11034) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (11034) image_to_4g: CMD: AT+SOCKSL=LONG[0m
+[0;32mI (12234) image_to_4g: Resp: [0m
+OK
+
+[0;32mI (12234) image_to_4g: CMD: AT+S[0m
+[0;32mI (13434) image_to_4g: Resp: [0m
+OK
+^boot.rom'v
+[0;32mI (13434) image_to_4g: Waiting for TCP Connection Verification...[0m
+[0;32mI (13729) image_to_4g: 4G Status: freestrong[0m
+[0;32mI (15100) image_to_4g: 4G Status: FS@TCP CONNECTED:0[0m
+
+[0;32mI (15100) image_to_4g: 4G Connection Verified (Ready for Data)[0m
+[0;32mI (15600) image_to_4g: Heartbeat. Status: CONNECTED. Use a strong 5V power supply![0m
+[0;32mI (15600) image_to_4g: Capturing Image...[0m
+[0;32mI (15605) image_to_4g: Sending Image (4852 bytes)...[0m
+[0;32mI (15666) image_to_4g: TX: 4096/4852 (TURBO)[0m
+[0;32mI (15676) image_to_4g: TX: 4852/4852 (TURBO)[0m
+[0;32mI (1568
