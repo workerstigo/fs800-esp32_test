@@ -7,10 +7,7 @@
 #include "freertos/task.h"
 #include "esp_camera.h"
 #include "esp_log.h"
-#include "esp_wifi.h"
-#include "esp_event.h"
 #include "nvs_flash.h"
-#include "esp_netif.h"
 #include "driver/uart.h"
 #include "driver/gpio.h"
 #include "driver/ledc.h"
@@ -25,9 +22,6 @@
 #include "board_config.h"
 
 static const char *TAG = "image_to_4g";
-
-#define ESP_WIFI_SSID      ""
-#define ESP_WIFI_PASS      ""
 
 #define RX_PIN 13
 #define TX_PIN 14 
@@ -99,36 +93,24 @@ bool init_4g_module() {
     if (!g_4g_connected) {
         ESP_LOGW(TAG, "4G Connection Timeout. Module might still be connecting...");
     } else {
-        // TURBO MODE: 500ms stabilization delay
-        vTaskDelay(pdMS_TO_TICKS(500));
+        // Wait 5 seconds for stabilization before sending data
+        ESP_LOGI(TAG, "Waiting 5s for stabilization...");
+        vTaskDelay(pdMS_TO_TICKS(5000));
     }
 
     free(resp_buf);
     return g_4g_connected;
 }
 
-// --- Image to Text Transmission Task ---
+// --- Simple Image Transmission Task ---
 void image_transmission_task(void *pvParameters)
 {
     uint8_t *io_buf = (uint8_t *) heap_caps_malloc(BUF_SIZE, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     if (!io_buf) io_buf = (uint8_t *) malloc(BUF_SIZE);
 
-    int64_t lastSendTime = 0;
-    int64_t lastHeartbeat = 0;
-    const int64_t captureIntervalMs = 1000; // TURBO MODE: 1 FPS
-    const int64_t heartbeatIntervalMs = 5000;
-
     init_4g_module();
 
     while (1) {
-        int64_t now = esp_timer_get_time() / 1000;
-
-        if (now - lastHeartbeat > heartbeatIntervalMs) {
-            ESP_LOGI(TAG, "Heartbeat. Status: %s. Use a strong 5V power supply!", 
-                     g_4g_connected ? "CONNECTED" : "DISCONNECTED");
-            lastHeartbeat = now;
-        }
-
         if (!g_4g_connected) {
             ESP_LOGW(TAG, "Not connected. Re-initializing...");
             init_4g_module();
@@ -136,82 +118,50 @@ void image_transmission_task(void *pvParameters)
             continue;
         }
 
-        if (now - lastSendTime > captureIntervalMs) {
-            lastSendTime = now;
-            ESP_LOGI(TAG, "Capturing Image...");
+        ESP_LOGI(TAG, "Capturing Image...");
+        camera_fb_t *fb = esp_camera_fb_get();
+        if (fb) {
+            // --- STEP 1: Copy to private buffer & release FB ---
+            size_t jpeg_len = fb->len;
+            uint8_t *raw_buf = (uint8_t *)heap_caps_malloc(jpeg_len, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+            if (raw_buf) {
+                memcpy(raw_buf, fb->buf, jpeg_len);
+                esp_camera_fb_return(fb); 
+                fb = NULL;
 
-            camera_fb_t *fb = esp_camera_fb_get();
-            if (fb) {
+                // --- STEP 2: Base64 Encode ---
                 size_t out_len = 0;
-                mbedtls_base64_encode(NULL, 0, &out_len, fb->buf, fb->len);
-                
+                mbedtls_base64_encode(NULL, 0, &out_len, raw_buf, jpeg_len);
                 unsigned char *base64_buffer = (unsigned char *)heap_caps_malloc(out_len + 1, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+                
                 if (base64_buffer) {
-                    if (mbedtls_base64_encode(base64_buffer, out_len, &out_len, fb->buf, fb->len) == 0) {
+                    if (mbedtls_base64_encode(base64_buffer, out_len, &out_len, raw_buf, jpeg_len) == 0) {
                         base64_buffer[out_len] = '\0';
-                        ESP_LOGI(TAG, "Sending Image (%d bytes)...", (int)out_len);
-
-                        // TURBO MODE: Rapid flush
-                        uart_flush_input(UART_MOD_NUM);
-                        vTaskDelay(pdMS_TO_TICKS(50)); 
+                        ESP_LOGI(TAG, "Sending Image Text (%d bytes)...", (int)out_len);
 
                         uart_write_bytes(UART_MOD_NUM, "IMAGE_START\n", 12);
-                        
                         size_t sent = 0;
-                        bool fail = false;
                         while(sent < out_len) {
-                            size_t to_send = (out_len - sent > 2048) ? 2048 : (out_len - sent); // Larger chunks
-                            
-                            int rx_len = uart_read_bytes(UART_MOD_NUM, io_buf, BUF_SIZE, 0);
-                            if (rx_len > 0) {
-                                if (strstr((char*)io_buf, "^boot.rom") || strstr((char*)io_buf, "CLOSED") || strstr((char*)io_buf, "ERROR")) {
-                                    ESP_LOGE(TAG, "TURBO FAIL - Power/Connection Lost!");
-                                    fail = true;
-                                    break;
-                                }
-                            }
-
-                            int written = uart_write_bytes(UART_MOD_NUM, (const char *)(base64_buffer + sent), to_send);
-                            if (written < 0) {
-                                fail = true;
-                                break;
-                            }
-                            sent += written;
-                            if (sent % 4096 < 2048) ESP_LOGI(TAG, "TX: %d/%d (TURBO)", (int)sent, (int)out_len);
-                            
-                            // TURBO pacing: 10ms
+                            size_t to_send = (out_len - sent > 512) ? 512 : (out_len - sent);
+                            uart_write_bytes(UART_MOD_NUM, (const char *)(base64_buffer + sent), to_send);
+                            sent += to_send;
                             vTaskDelay(pdMS_TO_TICKS(10));
                         }
-                        
-                        if (!fail) {
-                            uart_write_bytes(UART_MOD_NUM, "IMAGE_END\n", 10);
-                            ESP_LOGI(TAG, "Transmission Finished.");
-                        } else {
-                            g_4g_connected = false;
-                        }
+                        uart_write_bytes(UART_MOD_NUM, "IMAGE_END\n", 10);
+                        ESP_LOGI(TAG, "Finished.");
                     }
                     free(base64_buffer);
                 }
+                free(raw_buf);
+            } else {
                 esp_camera_fb_return(fb);
             }
         }
 
-        int len = uart_read_bytes(UART_MOD_NUM, io_buf, BUF_SIZE, pdMS_TO_TICKS(50));
-        if (len > 0) {
-            ESP_LOGI(TAG, "4G RX: %.*s", len, (char*)io_buf);
-            if (strstr((char*)io_buf, "^boot.rom")) {
-                 ESP_LOGE(TAG, "DETECTED MODULE REBOOT (Power issue?)");
-                 g_4g_connected = false;
-            } else if (strstr((char*)io_buf, "CLOSED") || strstr((char*)io_buf, "ERROR")) {
-                g_4g_connected = false;
-            }
-        }
-
-        vTaskDelay(pdMS_TO_TICKS(100));
+        // Wait 3 seconds before next image
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
-    if (io_buf) free(io_buf);
-    vTaskDelete(NULL);
-}
+} 
 
 bool psramFound() {
 #ifdef CONFIG_SPIRAM_SUPPORT
@@ -219,18 +169,6 @@ bool psramFound() {
 #else
     return false;
 #endif
-}
-
-void wifi_init_sta(void) {
-    esp_netif_init();
-    esp_event_loop_create_default();
-    esp_netif_create_default_wifi_sta();
-    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-    esp_wifi_init(&cfg);
-    wifi_config_t wifi_config = { .sta = { .ssid = ESP_WIFI_SSID, .password = ESP_WIFI_PASS } };
-    esp_wifi_set_mode(WIFI_MODE_STA);
-    esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
-    esp_wifi_start();
 }
 
 void app_main()
@@ -252,8 +190,6 @@ void app_main()
     ESP_ERROR_CHECK(uart_set_pin(UART_MOD_NUM, TX_PIN, RX_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
     gpio_set_pull_mode(RX_PIN, GPIO_PULLUP_ONLY);
 
-    wifi_init_sta();
-
     camera_config_t config;
     config.ledc_channel = LEDC_CHANNEL_0; config.ledc_timer = LEDC_TIMER_0;
     config.pin_d0 = Y2_GPIO_NUM; config.pin_d1 = Y3_GPIO_NUM; config.pin_d2 = Y4_GPIO_NUM;
@@ -263,25 +199,16 @@ void app_main()
     config.pin_vsync = VSYNC_GPIO_NUM; config.pin_href = HREF_GPIO_NUM;
     config.pin_sccb_sda = SIOD_GPIO_NUM; config.pin_sccb_scl = SIOC_GPIO_NUM;
     config.pin_pwdn = PWDN_GPIO_NUM; config.pin_reset = RESET_GPIO_NUM;
-    config.xclk_freq_hz = 5000000; // Stabilize DMA
-    config.frame_size = FRAMESIZE_QVGA; // 320x240
+    config.xclk_freq_hz = 5000000;
+    config.frame_size = FRAMESIZE_QVGA; 
     config.pixel_format = PIXFORMAT_JPEG;
-    config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
+    config.grab_mode = CAMERA_GRAB_LATEST; 
     config.fb_location = CAMERA_FB_IN_PSRAM;
-    config.jpeg_quality = 35; // Turbo Compression
+    config.jpeg_quality = 35; 
     config.fb_count = 2;
 
-    esp_err_t err = esp_camera_init(&config);
-    if (err == ESP_OK) {
-        sensor_t * s = esp_camera_sensor_get();
-        if (s->id.PID == OV5640_PID) s->set_vflip(s, 1);
-    }
+    ESP_ERROR_CHECK(esp_camera_init(&config));
     
-    // Prototypes for app_httpd
-    extern void startCameraServer();
-    extern void setupLedFlash();
-    startCameraServer();
-
-    // Use priority 1 to ensure Camera DMA interrupts and WiFi have highest precedence
-    xTaskCreate(image_transmission_task, "img_to_4g", 16384, NULL, 1, NULL);
+    // Simple priority 1 task
+    xTaskCreate(image_transmission_task, "img_tx", 16384, NULL, 1, NULL);
 }
