@@ -29,17 +29,16 @@ static const char *TAG = "image_to_4g";
 #define BUF_SIZE 2048
 
 static bool g_4g_connected = false;
+static int64_t g_last_server_ok_time = 0;
+#define SERVER_OK_TIMEOUT_MS 10000 // 10 seconds
 
 // --- AT Commands for 4G Module ---
 const char* atInitCommands[] = {
     "AT",
     "+++", 
     "AT",
-    "AT+E=OFF",
-    "AT+APN=internet,,,0",
     "AT+SOCKEN=ON",
     "AT+SOCK=TCP,1.1.1.1,5000",
-    "AT+SOCKSL=LONG",
     "AT+S"
 };
 const int initCmdCount = sizeof(atInitCommands) / sizeof(atInitCommands[0]);
@@ -93,6 +92,8 @@ bool init_4g_module() {
     if (!g_4g_connected) {
         ESP_LOGW(TAG, "4G Connection Timeout. Module might still be connecting...");
     } else {
+        // Reset heartbeat timer on successful init
+        g_last_server_ok_time = esp_timer_get_time() / 1000;
         // Wait 5 seconds for stabilization before sending data
         ESP_LOGI(TAG, "Waiting 5s for stabilization...");
         vTaskDelay(pdMS_TO_TICKS(5000));
@@ -158,8 +159,28 @@ void image_transmission_task(void *pvParameters)
             }
         }
 
-        // Wait 3 seconds before next image
-        vTaskDelay(pdMS_TO_TICKS(500));
+        // Check for Server Messages & Wait
+        int64_t start_wait = esp_timer_get_time() / 1000;
+        const int wait_ms = 500; // Total wait time
+        
+        while ((esp_timer_get_time() / 1000) - start_wait < wait_ms) {
+            int len = uart_read_bytes(UART_MOD_NUM, io_buf, BUF_SIZE, pdMS_TO_TICKS(100));
+            if (len > 0) {
+                ESP_LOGI(TAG, "Server Message: %.*s", len, (char*)io_buf);
+                if (strstr((char*)io_buf, "OK")) {
+                    ESP_LOGI(TAG, ">>> RECEIVED SERVER HEARTBEAT <<<");
+                    g_last_server_ok_time = esp_timer_get_time() / 1000;
+                }
+            }
+            vTaskDelay(pdMS_TO_TICKS(10));
+        }
+
+        // --- STEP 4: Check for Server Timeout ---
+        int64_t now = esp_timer_get_time() / 1000;
+        if (now - g_last_server_ok_time > SERVER_OK_TIMEOUT_MS) {
+            ESP_LOGE(TAG, "SERVER HEARTBEAT TIMEOUT (%d s)! Reconnecting...", (int)(SERVER_OK_TIMEOUT_MS/1000));
+            g_4g_connected = false;
+        }
     }
 } 
 
